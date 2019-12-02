@@ -1,0 +1,21 @@
+{
+  "short_name": "User Management",
+  "name": "User Management App",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/android-chrome-512x512",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#6200ee",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#6200ee"
+}
