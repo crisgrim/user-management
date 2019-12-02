@@ -41,42 +41,48 @@ export default {
     }
   },
   methods: {
-    convertToCSV(objArray) {
-      // TODO Get better this function.
-      // Has some troubles with objects inside
-      const array = typeof objArray != "object" ? JSON.parse(objArray) : objArray
-      let str = ""
-      for (let i = 0; i < array.length; i++) {
-        let line = ""
-        for (let index in array[i]) {
-          if (line != "") line += ","
-          line += array[i][index]
+    convertObjectToString (object) {
+      const values = Object.values(object)
+      return values.join(' ')
+    },
+
+    convertToCSV (objArray) {
+      const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray
+      return array.reduce((acc, item) => {
+        let line = ''
+        for (let key in item) {
+          if (line != '') line += ','
+          const data = typeof item[key] === 'object'
+            ? this.convertObjectToString(item[key])
+            : item[key]
+          line += data
         }
-        str += line + "\r\n"
-      }
-      return str
+        return acc += line + '\r\n'
+      }, '')
     },
 
     downloadFavorites () {
       const jsonObject = JSON.stringify(this.favoriteUsers)
       const csv = this.convertToCSV(jsonObject)
-      const exportName = "myfavorites.csv"
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" })
+
+      const exportName = 'myfavorites.csv'
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
 
       if (navigator.msSaveBlob) {
         navigator.msSaveBlob(blob, exportName)
       } else {
-        const link = document.createElement("a");
+        const link = document.createElement('a');
         if (link.download !== undefined) {
-        const url = URL.createObjectURL(blob);
-        link.setAttribute("href", url);
-        link.setAttribute("download", exportName);
-        link.style.visibility = "hidden";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+          const url = URL.createObjectURL(blob);
+          link.setAttribute('href', url);
+          link.setAttribute('download', exportName);
+          link.style.visibility = 'hidden';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         }
       }
+
     }
   }
 }
