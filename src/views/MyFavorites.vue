@@ -1,13 +1,16 @@
 <template>
   <div>
     <the-header show-back title="My Favorites"/>
-    <button
-      class="app__button"
-      type="button"
-      @click="downloadFavorites">
-      <i class="material-icons">cloud_download</i> Download
-    </button>
-    <users-list :users="favoriteUsers" />
+    <div v-if="favoriteUsers.length">
+      <button
+        class="app__button"
+        type="button"
+        @click="downloadFavorites">
+        <i class="material-icons">cloud_download</i> Download
+      </button>
+      <users-list :users="favoriteUsers" />
+    </div>
+    <p class="app__noresults" v-else>Oops, You don't have a favourite user yet</p>
   </div>
 </template>
 
@@ -90,6 +93,10 @@ export default {
 
   .material-icons {
     margin-right: 8px;
+  }
+
+  .app__noresults {
+    padding: 16px;
   }
 }
 </style>

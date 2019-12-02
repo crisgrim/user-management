@@ -8,7 +8,12 @@
       @selected-gender="handleFilterGender"
       @selected-age="handleFilterAge"
       @selected-nationality="handleFilterNationality" />
-    <users-list :users="filteredResult" />
+    <div v-if="filteredResult.length">
+      <users-list :users="filteredResult" />
+    </div>
+    <div class="app__noresults" v-else>
+      <p>We don't have users with the filters that you selected</p>
+    </div>
   </div>
 </template>
 
@@ -100,5 +105,7 @@ export default {
 </script>
 
 <style scoped>
-
+.app__noresults {
+  padding: 16px;
+}
 </style>
