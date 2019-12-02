@@ -23,6 +23,7 @@
 
       <div id="map"></div>
     </article>
+    <p v-else>The user that you request doesn't exist</p>
   </div>
 </template>
 
@@ -59,13 +60,15 @@ export default {
     }
 
     this.$nextTick(() => {
-      const { location } = this.user
-      this.createMap(location.coordinates.latitude, location.coordinates.longitude)
+      if (this.user && Object.keys(this.user).length > 0) {
+        const { location } = this.user
+        this.createMap(location.coordinates.latitude, location.coordinates.longitude)
+      }
     })
   },
   methods: {
     getUser () {
-      return this.users.find(user => user.login.username === this.username)
+      return this.users.find(user => user.login.username === this.username) || {}
     },
     createMap (latitude, longitude) {
       if ('google' in window) {
