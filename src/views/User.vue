@@ -18,8 +18,12 @@
 
       <p>{{ user.location.street.name }}, {{ user.location.street.number }}, {{ user.location.city }}</p>
 
-      <p>{{ user.phone }}</p>
-      <p>{{ user.cell }}</p>
+      <a class="user__detail--telephone" :href="`tel:${user.phone}`">
+        <i class="material-icons">mobile_friendly</i> {{ user.phone }}
+      </a>
+      <a class="user__detail--telephone" :href="`tel:${user.cell}`">
+        <i class="material-icons">phone</i> {{ user.cell }}
+      </a>
 
       <div id="map"></div>
     </article>
@@ -140,8 +144,20 @@ export default {
     right: 16px;
   }
 
+  &--telephone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    color: #6200ee;
+    font-weight: 500;
+    text-decoration: none;
+    margin: 8px 0;
+  }
+
   h3, p {
     margin: 0;
   }
+
 }
 </style>
